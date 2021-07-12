@@ -1,0 +1,5 @@
+ 
+curl -SLO https://mirrors.tuna.tsinghua.edu.cn/kernel/v5.x/linux-5.4.123.tar.gz
+curl -SLO https://mirrors.tuna.tsinghua.edu.cn/kernel/v5.x/linux-5.4.123.tar.sign
+curl -SLO https://mirrors.tuna.tsinghua.edu.cn/kernel/projects/rt/5.4/patch-5.4.123-rt59.patch.gz
+curl -SLO https://mirrors.tuna.tsinghua.edu.cn/kernel/projects/rt/5.4/patch-5.4.123-rt59.patch.sign

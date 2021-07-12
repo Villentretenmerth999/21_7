@@ -1,0 +1,34 @@
+ libfranka
+ 
+ 
+sudo apt install build-essential cmake git libpoco-dev libeigen3-dev
+
+git clone --recursive https://github.com/frankaemika/libfranka
+cd libfranka
+git checkout <version>
+git submodule update    #common
+
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build .
+
+cpack -G DEB
+
+ros
+
+mkdir -p catkin_ws/src
+cd catkin_ws
+source /opt/ros/melodic/setup.sh
+catkin_init_workspace src
+
+git clone --recursive https://github.com/frankaemika/franka_ros src/franka_ros
+git checkout <version>
+
+rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka
+
+catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/path/to/libfranka/build
+source devel/setup.sh
+
+#source
+~/.zshrc 

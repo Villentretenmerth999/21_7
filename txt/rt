@@ -1,0 +1,67 @@
+ 
+
+apt-get install build-essential bc curl ca-certificates fakeroot gnupg2 libssl-dev lsb-release libelf-dev bison flex
+
+curl -SLO https://mirrors.tuna.tsinghua.edu.cn/kernel/v5.x/linux-5.4.123.tar.gz
+curl -SLO https://mirrors.tuna.tsinghua.edu.cn/kernel/v5.x/linux-5.4.123.tar.sign
+curl -SLO https://mirrors.tuna.tsinghua.edu.cn/kernel/projects/rt/5.4/patch-5.4.123-rt59.patch.gz
+curl -SLO https://mirrors.tuna.tsinghua.edu.cn/kernel/projects/rt/5.4/patch-5.4.123-rt59.patch.sign
+
+uname -a
+
+tar -xzvf linux-5.4.10.tar.gz
+gunzip patch-5.4.10-rt5.patch.gz
+
+gpg2 --verify linux-4.14.12.tar.sign
+gpg2  --keyserver hkp://keys.gnupg.net --recv-keys 0x6092693E
+
+patch -p1 < ../patch-4.14.12-rt10.patch
+
+make menuconfig
+make oldconfig
+
+.config
+keys=""
+
+#
+fakeroot make -j4 deb-pkg
+sudo dpkg -i ../linux-headers-4.14.12-rt10_*.deb ../linux-image-4.14.12-rt10_*.deb
+
+sudo addgroup realtime
+sudo usermod -a -G realtime $wjy
+#
+
+#
+make -j8
+sudo make modules_install -j8
+sudo make install -j8
+#
+
+#limits
+/etc/security/limits.conf
+@realtime soft rtprio 99
+@realtime soft priority 99
+@realtime soft memlock 102400
+@realtime hard rtprio 99
+@realtime hard priority 99
+@realtime hard memlock 102400
+#
+
+#实时性测试
+sudo apt-get install rt-tests 
+
+sudo cyclictest -t 5 -p 80 -n  #运行五个线程，线程优先级为80，无限循环
+
+P: 0 线程优先级为0
+C: 9397 计数器。线程的时间间隔每达到一次，计数器加1
+I: 1000 时间间隔为1000微秒(us)
+Min: 最小延时(us)
+Act: 最近一次的延时(us)
+Avg：平均延时(us)
+Max： 最大延时(us)
+
+#可能出现的问题
+sudo apt-get install libncurses5-dev libssl-dev
+sudo apt-get install build-essential openssl
+sudo apt-get install zlibc minizip
+sudo apt-get install libidn11-dev libidn11

@@ -1,0 +1,16 @@
+ 
+cat /etc/shells //查看shell
+
+sudo apt-get install zsh    //安装zsh
+
+echo $SHELL 
+
+chsh -s /bin/zsh
+
+git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh 
+
+ls ~/.oh-my-zsh/themes
+
+.zshrc
+ZSH_THEME="amuse"
+

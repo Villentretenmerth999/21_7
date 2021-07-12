@@ -1,0 +1,37 @@
+ 
+https://mirror.ghproxy.com/
+
+sudo sh -c '. /etc/lsb-release && echo "deb http://mirrors.ustc.edu.cn/ros/ubuntu/ `lsb_release -cs` main" > /etc/apt/sources.list.d/ros-latest.list'
+
+curl -s https://mirror.ghproxy.com/https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+
+sudo apt update
+
+sudo apt install ros-melodic-desktop-full
+
+echo "source /opt/ros/melodic/setup.zsh" >> ~/.zshrc
+source ~/.zshrc
+
+sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+sudo apt install python-rosdep
+
+/etc/ros/rosdep/sources.list.d/
+https://mirror.ghproxy.com/
+----
+# os-specific listings first
+yaml https://mirror.ghproxy.com/https://raw.github.com/ros/rosdistro/master/rosdep/osx-homebrew.yaml osx 
+
+# generic
+yaml https://mirror.ghproxy.com/https://raw.github.com/ros/rosdistro/master/rosdep/base.yaml
+yaml https://mirror.ghproxy.com/https://raw.github.com/ros/rosdistro/master/rosdep/python.yaml
+yaml https://mirror.ghproxy.com/https://raw.github.com/ros/rosdistro/master/rosdep/ruby.yaml
+gbpdistro https://mirror.ghproxy.com/https://raw.githubusercontent.com/ros/rosdistro/master/releases/fuerte.yaml fuerte
+
+# newer distributions (Groovy, Hydro, ...) must not be listed anymore, they are being fetched from the rosdistro index.yaml instead
+----
+
+sudo rosdep init
+rosdep update
+
+
