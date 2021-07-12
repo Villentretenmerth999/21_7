@@ -1,0 +1,9 @@
+ 
+git init
+git remote add origin https://github.com/Villentretenmerth999/21_7.git
+git add / *.txt
+git commit m ""
+git push -u origin main
+git pull origin master
+
+git clone -recul https://mirror.ghproxy.com/
